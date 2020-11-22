@@ -1,0 +1,2 @@
+- add ```libconnector.so``` to radio24.jar (open with WinRAR) 
+- then paste into natives/arm/
