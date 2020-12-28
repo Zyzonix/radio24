@@ -90,7 +90,7 @@ public class PlayerManager {
         musicManager.scheduler.queue(track);
     }
 
-    public static  synchronized PlayerManager getInstance() {
+    public static synchronized PlayerManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new PlayerManager();
         }

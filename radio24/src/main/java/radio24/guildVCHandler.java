@@ -2,9 +2,11 @@ package radio24;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.utils.WidgetUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +40,7 @@ public class guildVCHandler extends Thread {
         vChn = vc;
         msgres = msgreceived;
         new Timer().schedule(new check(), 100, 10000);
+        System.out.println("[INFO | " + dtf.format(LocalDateTime.now()) + "] checking if VC is empty");
     }
 }
 class check extends TimerTask {
@@ -45,7 +48,6 @@ class check extends TimerTask {
     public void run() {
         VoiceChannel v = jda.getAudioManagers().get(0).getConnectedChannel();
         if (v == null) return;
-        System.out.println("[INFO | " + dtf.format(LocalDateTime.now()) + "] checking if VC is empty");
         List<VoiceChannel> conn_User = v.getGuild().getVoiceChannels();
         if (conn_User.isEmpty()) {
             disc();
@@ -59,6 +61,6 @@ class check extends TimerTask {
 
     }
     void disc() {
-        new Bot.listeners().MusicStop(msgres, "VC is empty, saving bandwith...");
+        new Bot.listeners().MusicStop(msgres, "VC empty");
     }
 }
