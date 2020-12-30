@@ -186,11 +186,11 @@ public class Bot {
 
         //boot system
         System.out.println("[INFO | " + dtf.format(now) + "] started booting... ");
-        JDABuilder builder = JDABuilder.createDefault("NzQ0MjMzMjA0MzY5NzE5Mjk3.XzgPLw.pYyKzduYrFboQaAKmjxlR5YI_ic");
+        JDABuilder builder = JDABuilder.createDefault("");
         builder.setAutoReconnect(true)
                 .setStatus(OnlineStatus.DO_NOT_DISTURB);
-                //common token: NTg2MjA0MTY4MjM0OTkxNjI4.XPknLA.oEXPaY2aQ76iSHaan6NQFXjzOj4
-                //dev token: NzQ0MjMzMjA0MzY5NzE5Mjk3.XzgPLw.pYyKzduYrFboQaAKmjxlR5YI_ic
+                //common token: 
+                //dev token: 
 
         //Adding listeners
         addCommands();
