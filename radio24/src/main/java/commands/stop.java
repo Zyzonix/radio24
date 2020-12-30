@@ -19,6 +19,7 @@ public class stop implements radio24.cmd_int {
     public void action(MessageReceivedEvent event, String timestamp) {
         Bot.listeners.MusicStop(event, "received -stop command");
         Bot.dholder(event.getGuild(), "delete");
+        Bot.status_inf_set("");
     }
 
     @Override

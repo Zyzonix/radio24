@@ -60,7 +60,7 @@ public class play implements radio24.cmd_int{
 
         PlayerManager manager = PlayerManager.getInstance();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
-        manager.loadAndPlay(event.getTextChannel(), url);
+        manager.loadAndPlay(event.getTextChannel(), url, msg_content[1]);
         manager.getGuildMusicManager(event.getGuild()).player.setVolume(5);
         guildVCHandler gvch = new guildVCHandler();
         new Thread(gvch).run();

@@ -34,7 +34,7 @@ public class help implements radio24.cmd_int {
         EmbedBuilder helpemb = new EmbedBuilder().setColor(Color.green).setFooter("requested by " + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator(), event.getAuthor().getAvatarUrl());
         helpemb.setTitle("ʀᴀᴅɪᴏ²⁴ - Helpmenu");
         helpemb.setThumbnail("https://www.clipartkey.com/mpngs/m/255-2554227_global-support-icon-png-clipart-png-download-international.png");
-        helpemb.addField("IMPORTANT:", "This bot is amongst other things used for developmenttests, errors can happen! \n\n", true);
+        helpemb.addField("IMPORTANT:", "This bot is amongst other things used for developmenttests, errors can happen! \n\n current bot-version: ```" + Bot.version + "```", true);
         helpemb.addBlankField(false);
         ArrayList<String> real_cmds = cmd_collector();
         for (String key : commands.keySet()) {

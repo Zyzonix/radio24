@@ -40,6 +40,7 @@ public class soundsourceservice {
         return ret;
     }
 
+
     public static HashMap<Boolean, String> collector(String key) {
         HashMap<Boolean, String> ret = new HashMap<>();
         if (sourcelist().containsKey(key)) {

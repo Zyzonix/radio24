@@ -32,11 +32,13 @@ import java.util.*;
 
 public class Bot {
     public static JDA jda;
-    public static final double version = 2.0;
+    public static final double version = 2.1;
     static Timer timer = new Timer();
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+    static DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm");
     public static HashMap<String, cmd_int> command_cont = new HashMap<>();
     static HashMap<Guild, String> data_holder = new HashMap<>();
+    static String playing = "";
     public static class listeners extends ListenerAdapter {
 
         @Override
@@ -184,11 +186,11 @@ public class Bot {
 
         //boot system
         System.out.println("[INFO | " + dtf.format(now) + "] started booting... ");
-        JDABuilder builder = JDABuilder.createDefault("");
+        JDABuilder builder = JDABuilder.createDefault("NzQ0MjMzMjA0MzY5NzE5Mjk3.XzgPLw.pYyKzduYrFboQaAKmjxlR5YI_ic");
         builder.setAutoReconnect(true)
                 .setStatus(OnlineStatus.DO_NOT_DISTURB);
-                //common token: 
-                //dev token: 
+                //common token: NTg2MjA0MTY4MjM0OTkxNjI4.XPknLA.oEXPaY2aQ76iSHaan6NQFXjzOj4
+                //dev token: NzQ0MjMzMjA0MzY5NzE5Mjk3.XzgPLw.pYyKzduYrFboQaAKmjxlR5YI_ic
 
         //Adding listeners
         addCommands();
@@ -220,34 +222,40 @@ public class Bot {
         public void run() {
             //getting date this way is deprecated; newer version available!!
             long ping = jda.getGatewayPing();
-            Date time = new Date();
-            int minutes = time.getMinutes();
-            String minutesupdated = "";
-            if (minutes < 10) minutesupdated = "0";
-            String tm = time.getHours() + ":" + minutesupdated + minutes;
-            Activity act = jda.getPresence().getActivity();
+            LocalDateTime dt = LocalDateTime.now();
             String activity1 = "the space...";
-            String activity2 = "the clock: " + tm + " (CET)";
+            String activity2 = "the clock: " + dtf2.format(dt) + " (CET)";
             String activity3 = "-help";
             String activity4 = "my ping: " + ping + "ms";
-            String actcont = "";
-            if (jda.getPresence().getActivity().getName() == null) {
-                actcont = "the clock:";
+            String activity5 = playing;
+            String activity0 = "version: " + version;
+            HashMap<Integer, String> statusmap = new HashMap<>();
+            statusmap.put(0, activity0);
+            statusmap.put(1, activity1);
+            statusmap.put(2, activity2);
+            statusmap.put(3, activity3);
+            statusmap.put(4, activity4);
+            if (!activity5.isEmpty()) {
+                statusmap.put(5, activity5);
             }
-            if (Objects.equals(jda.getPresence().getActivity(), Activity.watching(activity1))) {
-                jda.getPresence().setActivity(Activity.watching(activity2));
-            } else if (actcont.contains("the clock:")) {
-                jda.getPresence().setActivity(Activity.listening(activity3));
-            } else if (jda.getPresence().getActivity().getName().contains("-help")) {
-                jda.getPresence().setActivity(Activity.watching(activity4));
-            } else if (jda.getPresence().getActivity().getName().contains("my ping:")) {   // <-- Add other values here
-                jda.getPresence().setActivity(Activity.watching(activity1));                    // <-- Add other values here
+            int random = new Random().nextInt(statusmap.size());
+            if (random == 0 || random == 5) {
+                if (random == 5 && statusmap.size() == 5) {
+                    return;
+                } else {
+                    jda.getPresence().setActivity(Activity.playing(statusmap.get(random)));
+                }
+            } else if (random == 3) {
+                jda.getPresence().setActivity(Activity.listening(statusmap.get(random)));
             } else {
-                jda.getPresence().setActivity(Activity.watching(activity1));
+                jda.getPresence().setActivity(Activity.watching(statusmap.get(random)));
             }
         }
     }
 
+    public static void status_inf_set(String input) {
+        playing = input;
+    }
     public static HashMap<Guild, String> dholder(Guild guild, String data) {
         HashMap<Guild, String> dh = new HashMap<>();
         if (data.isEmpty()) {

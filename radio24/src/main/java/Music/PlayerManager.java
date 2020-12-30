@@ -11,6 +11,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import radio24.iholder;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -51,16 +52,14 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackURL) {
+    public void loadAndPlay(TextChannel channel, String trackURL, String input) {
         LocalDateTime now = LocalDateTime.now();
         GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
         playerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                String musictitle = "";
-                if (audioTrack.getInfo().title.equals("Unknown title")) musictitle = ":radio:  Started playing your music, just enjoy!"; else musictitle = ":radio:  Now playing: " + audioTrack.getInfo().title;
-                channel.sendMessage(new EmbedBuilder().setColor(Color.green).setTitle(musictitle).build()).complete();
-                System.out.println("[INFO | " + dtf.format(now) + "] started music | " + audioTrack.getInfo().title);
+                channel.sendMessage(iholder.request_confirm(input).build()).complete();
+                System.out.println("[INFO | " + dtf.format(now) + "] started playing | " + trackURL);
                 play(musicManager, audioTrack);
             }
             @Override
